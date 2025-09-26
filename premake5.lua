@@ -17,29 +17,28 @@ workspace "bgfx_test"
     targetdir "bin/%{cfg.platform}/%{cfg.buildcfg}"
     location "build/%{_ACTION}"
     startproject "HelloWorld"
-
     filter "platforms:Win64"
         system "windows"
         architecture "x86_64"
-
     filter "platforms:arm64"
         system "linux"
-        architecture "x86_64"
+        architecture "ARM64"
 		toolset "gcc"
-
+		defines { "BGFX_CONFIG_RENDERER_DIRECT3D11=0" }
     filter "configurations:Debug"
         defines { "DEBUG", "BX_CONFIG_DEBUG=1" }
         symbols "On"
-
     filter "configurations:Release"
         defines { "NDEBUG", "BX_CONFIG_DEBUG=0" }
-        optimize "On"
-
+        optimize "Full"
 	filter "action:vs*"
     	buildoptions {
         "/Zc:__cplusplus",
         "/Zc:preprocessor"
     	}
+	--filter { "platforms:linux", "action:gmake" }
+	--	buildoptions { "-march=armv8-a", "-mtune=cortex-a53", "--sysroot=/user/aarch64-linux-gnu" }
+	--	linkoptions { "--sysroot=/usr/aarch64-linux-gnu" }
 
 project "HelloWorld"
     kind "ConsoleApp"
@@ -91,6 +90,12 @@ project "bgfx"
 	filter "system:windows"
 		includedirs {
 			path.join(BGFX_DIR, "3rdparty/directx-headers/include/directx"),
+		}
+	filter "system:linux"
+		includedirs {
+			path.join(BGFX_DIR, "3rdparty/directx-headers/include/directx"),
+			path.join(BGFX_DIR, "3rdparty/directx-headers/include"),
+			path.join(BGFX_DIR, "3rdparty/directx-headers/include/wsl/stubs"),
 		}
 	setBxCompat()
 
