@@ -37,8 +37,10 @@
 *.out
 *.app
 
-# Allow tools executables
-!/tools/*/*.exe
+# But NOT those under tools/
+!tools/**/*.exe
+!tools/**/*.out
+!tools/**/*.app
 
 # debug information files
 *.dwo
