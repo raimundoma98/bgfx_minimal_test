@@ -37,6 +37,9 @@
 *.out
 *.app
 
+# Allow tools executables
+!/tools/*/*.exe
+
 # debug information files
 *.dwo
 
