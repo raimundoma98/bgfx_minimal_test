@@ -36,7 +36,7 @@ workspace "bgfx_test"
         "/Zc:__cplusplus",
         "/Zc:preprocessor"
     	}
-	--filter { "platforms:linux", "action:gmake" }
+	--filter { "platforms:arm64", "action:gmake", "system:linux" }
 	--	buildoptions { "-march=armv8-a", "-mtune=cortex-a53", "--sysroot=/user/aarch64-linux-gnu" }
 	--	linkoptions { "--sysroot=/usr/aarch64-linux-gnu" }
 
